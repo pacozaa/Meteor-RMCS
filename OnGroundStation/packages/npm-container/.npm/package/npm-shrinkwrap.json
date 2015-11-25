@@ -1,0 +1,12 @@
+{
+  "dependencies": {
+    "net-socket": {
+      "version": "1.0.0",
+      "dependencies": {
+        "delegates": {
+          "version": "0.1.0"
+        }
+      }
+    }
+  }
+}

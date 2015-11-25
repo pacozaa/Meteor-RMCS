@@ -1,0 +1,13 @@
+{
+  "name": "ondrone",
+	"version": "1.0.0",
+	"description": "nodejs app for drone project",
+  "author": {
+		"name": "sarin suriyakoon",
+		"email": "pacosarin@gmail.com"
+	},
+  "dependencies": {
+		"serialport": "2.0.5",
+    "net-socket": "1.0.0"
+	}
+}

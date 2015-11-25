@@ -1,0 +1,61 @@
+<div id="left-box" flex>
+    <div layout="column">
+      <span class="logo">
+        FLYING DUTCH MAN
+      </span>
+      <div layout>
+        <div ng-class="Status.socket">
+        </div>
+        <span class="status-con">
+          DRONE CONNECTION
+        </span>
+      </div>
+      <div layout>
+        <div ng-class="Status.gps">
+        </div>
+        <span class="status-gps">
+          GPS CONNECTION
+        </span>
+      </div>
+      <div layout>
+        <div ng-class="Status.board">
+        </div>
+        <span class="status-board">
+          DRONE BOARD
+        </span>
+      </div>
+    </div>
+  </div>
+  <div id="center-box">
+
+    <div layout="column" >
+      <span>DRONE CONTROLLER</span>
+      <div id="mapbox" layout-align="center center">
+          <ui-gmap-google-map options="map.options" center="map.center" zoom="map.zoom" flex layout="row">
+            <ui-gmap-polyline ng-repeat="p in polylines" path="p.path" stroke="p.stroke" visible='p.visible'
+                  geodesic='p.geodesic' fit="false" editable="p.editable" draggable="p.draggable" icons='p.icons'>
+            </ui-gmap-polyline>
+            <ui-gmap-circle ng-repeat="c in circles track by c.id" center="c.center" stroke="c.stroke" fill="c.fill" radius="c.radius"
+                  visible="c.visible" geodesic="c.geodesic" editable="c.editable" draggable="c.draggable" clickable="c.clickable" control="c.control"
+                  events="c.events">
+            </ui-gmap-circle>
+          </ui-gmap-google-map>
+
+      </div>
+    </div>
+
+  </div>
+  <div id="right-box" layout-align="center center" layout="column" flex>
+      <md-button ng-click="launch()">
+        <div layout="column" layout-align="center center">
+          <img ng-src="/gs/images/icon_launching.png"/>
+          <span>LAUNCHING</span>
+        </div>
+      </md-button>
+      <md-button ng-click="landing()">
+        <div layout="column" layout-align="center center">
+          <img ng-src="/gs/images/icon_landing.png"/>
+          <span>LANDING</span>
+        </div>
+      </md-button>
+  </div>
