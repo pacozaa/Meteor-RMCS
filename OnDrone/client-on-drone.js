@@ -5,10 +5,10 @@ var arduino = new SerialPort("COM4", {
   baudrate: 9600,
 	parser: serialport.parsers.readline('\r\n')
 });
-// var gps = new SerialPort("COM3", {
-// 	baudrate: 9600,
-// 	parser: serialport.parsers.readline("\n")
-// });
+var gps = new SerialPort("COM3", {
+	baudrate: 9600,
+	parser: serialport.parsers.readline("\n")
+});
 var YI = require('./yimsg.js');
 var YITOKEN;
 var yi = new net.Socket();
@@ -93,16 +93,7 @@ arduino.on("open", function () {
 			var direction = parseFloat(data.substring(2));
 			client.write(JSON.stringify({compass : direction}));
 		}
-		if(data.indexOf('GP') >= 0){
-			var lat = data.split(',')[1];
-			var long = data.split(',')[2];
-			console.log('GPS PARSE lat '+lat+' long '+long);
-			client.write(JSON.stringify({
-				gps : 1,
-				gpslat : lat,
-				gpslong : long
-			}));
-		}
+
   });
   arduino.write("ls\n", function(err, results) {
     console.log('err ' + err);
@@ -116,25 +107,27 @@ arduino.on("close", function () {
 
 
 
-// gps.on("open", function(){
-// 	console.log('GPS Serial Open');
-// 	client.write(JSON.stringify({gps : 1}));
-// 	gps.on('data', function(data){
-// 		console.log('GPS Serial Data : '+ data);
-// 		var dataObj = JSON.parse(data);
-// 		if(dataObj.gps == 1){
-// 			client.write(JSON.stringify({
-// 					gps : 1,
-// 					gpslat : dataObj.lat,
-// 					gpslong : dataObj.long
-// 				}));
-// 		}
-// 	});
-// 	gps.write('ls\n', function(error, results){
-// 		console.log('Arduino err '+err);
-// 		console.log('Arduino results '+results)
-// 	});
-// });
-// gps.on('close', function(){
-// 	client.write(JSON.stringify({gsp : 0}));
-// });
+gps.on("open", function(){
+	console.log('GPS Serial Open');
+	client.write(JSON.stringify({gps : 1}));
+	gps.on('data', function(data){
+		console.log('GPS Serial Data : '+ data);
+    if(data.indexOf('GP') >= 0){
+			var lat = data.split(',')[1];
+			var long = data.split(',')[2];
+			console.log('GPS PARSE lat '+lat+' long '+long);
+			client.write(JSON.stringify({
+				gps : 1,
+				gpslat : lat,
+				gpslong : long
+			}));
+		}
+	});
+	gps.write('ls\n', function(error, results){
+		console.log('Arduino err '+err);
+		console.log('Arduino results '+results)
+	});
+});
+gps.on('close', function(){
+	client.write(JSON.stringify({gsp : 0}));
+});
