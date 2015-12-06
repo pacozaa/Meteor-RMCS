@@ -1,4 +1,4 @@
-# Robot Mission Control System(RMCS)
+# Meteor-Robot Mission Control System(MRMCS)
 ## Introduction
 **This repository use Nodejs+Meteor+Arduino.**
 
